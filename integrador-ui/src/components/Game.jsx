@@ -23,7 +23,7 @@ const [player1, setPlayer1] = useState({
     wins : 0
   })
   const [gameData, setGameData] = useState({
-      currentPlayer : player1,
+      currentPlayer : "player 1",
       gamesPlayed : 0,
       winner : null,
   })
@@ -50,17 +50,24 @@ const [player1, setPlayer1] = useState({
     || (player1.choice == "lizard" && (player2.choice == "Spock" || player2.choice == "paper"))
     || (player1.choice == "Spock" && (player2.choice == "rock") || player2.choice == "scissors")) 
   }
+
+  const handleChange = (event) => {
+    if(gameData.currentPlayer == "player 1") {
+      setPlayer1({...player1, playerChoice : event.target.value})
+      console.log(event.target.value);
+    } else {
+      setPlayer2({...player2, playerChoice : event.target.value})
+      console.log(event.target.value);
+    }
+  }
    
   const play = (event) => {
     event.preventDefault();
 
-    let choosen = event.target.value
-    console.log(choosen)
-    console.log()
-
+    //Usar un switch para agregar casos de 2 jugadores
     if (vsPlayer) {
-      setGameData({...gameData, currentPlayer : player2})
-      setPlayer1({...player1, playerChoice : choosen})
+      setGameData({...gameData, currentPlayer : "player 2"})
+      
     } else {
       setPlayer2({...player2, playerChoice : pcChoice()})
     }
@@ -72,7 +79,7 @@ const [player1, setPlayer1] = useState({
   }
 
   const reset = () => {
-    setGameData({...gameData, currentPlayer : player1})
+    setGameData({...gameData, currentPlayer : "player 1"})
     setPlayer1({...player1, playerChoice : null})
     setPlayer2({...player1, playerChoice : null})
   }
@@ -81,12 +88,12 @@ const [player1, setPlayer1] = useState({
         <div className="container">
           <form onSubmit={play}>
           <div className="row">
-            <div className="col-xs-1" align="center">
+            <div className="col-xs-1" align="center" onChange={handleChange}>
               {options.map((option) =>
-                <>
-                <input type="radio" id={option} name="choice" value={option}/>
-                <label for={option}>{option}</label>
-                </>
+                <a key={option}>
+                  <input type="radio" id={option} name="choice" value={option}/>
+                  <label for={option}>{option}</label>
+                </a>
               )}
             </div>
           </div>
@@ -94,7 +101,7 @@ const [player1, setPlayer1] = useState({
                 <input on type="submit" value="Submit"></input>
           </div>
           </form>
-          <div> {!!gameData.winner ? winner() : "Waiting" } </div>
+          <div> {!!gameData.winner ? winner : "Waiting" } </div>
           <div> {!!player1.choice ? player1.choice : "Waiting p1"} </div>
           <div> {!!player2.choice ? player2.choice : "Waiting p2"} </div>
           <button onClick={reset}>Reset</button>
