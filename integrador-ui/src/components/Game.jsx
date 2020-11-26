@@ -51,22 +51,53 @@ const [player1, setPlayer1] = useState({
     || (player1.choice == "Spock" && (player2.choice == "rock") || player2.choice == "scissors") 
   }
    
+  const play = (event) => {
+    event.preventDefault();
 
+    let choosen = event.target.value
+    console.log(choosen)
+    console.log()
+
+    if (vsPlayer) {
+      setGameData({...gameData, currentPlayer : player2})
+      setPlayer1({...player1, playerChoice : choosen})
+    } else {
+      setPlayer2({...player2, playerChoice : pcChoice()})
+    }
+
+  }
+
+  const pcChoice = () => {
+    return options[Math.floor(Math.random() * options.length)];
+  }
+
+  const reset = () => {
+    setGameData({...gameData, currentPlayer : player1})
+    setPlayer1({...player1, playerChoice : null})
+    setPlayer2({...player1, playerChoice : null})
+  }
 
     return (
         <div className="container">
+          <form onSubmit={play}>
           <div className="row">
             <div className="col-xs-1" align="center">
-
               {options.map((option) =>
                 <>
                 <input type="radio" id={option} name="choice" value={option}/>
                 <label for={option}>{option}</label>
                 </>
               )}
-
             </div>
           </div>
+          <div className="row">
+                <input on type="submit" value="Submit"></input>
+          </div>
+          </form>
+          <div> {!!winner ? winner() : "Waiting" } </div>
+          <div> {!!player1.choice ? player1.choice : "Waiting p1"} </div>
+          <div> {!!player2.choice ? player2.choice : "Waiting p2"} </div>
+          <button onClick={reset}>Reset</button>
         </div>
     )
 
