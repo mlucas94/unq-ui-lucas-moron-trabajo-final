@@ -44,11 +44,11 @@ const [player1, setPlayer1] = useState({
   }
 
   const player1Victory = () => {
-    return (player1.choice  == "rock" && (player2.choice == "scissors" || player2.choice == "lizard"))
+    return ((player1.choice  == "rock" && (player2.choice == "scissors" || player2.choice == "lizard"))
     || (player1.choice == "paper" && (player2.choice == "rock" || player2.choice == "Spock"))
     || (player1.choice == "scissors" && (player2.choice == "paper" || player2.choice == "lizard"))
     || (player1.choice == "lizard" && (player2.choice == "Spock" || player2.choice == "paper"))
-    || (player1.choice == "Spock" && (player2.choice == "rock") || player2.choice == "scissors") 
+    || (player1.choice == "Spock" && (player2.choice == "rock") || player2.choice == "scissors")) 
   }
    
   const play = (event) => {
@@ -94,7 +94,7 @@ const [player1, setPlayer1] = useState({
                 <input on type="submit" value="Submit"></input>
           </div>
           </form>
-          <div> {!!winner ? winner() : "Waiting" } </div>
+          <div> {!!gameData.winner ? winner() : "Waiting" } </div>
           <div> {!!player1.choice ? player1.choice : "Waiting p1"} </div>
           <div> {!!player2.choice ? player2.choice : "Waiting p2"} </div>
           <button onClick={reset}>Reset</button>
