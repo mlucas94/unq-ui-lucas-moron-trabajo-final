@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 //TODO: Agregar boton de 'nuevo juego/vs computadora', redireccionar game
 //TODO: imagen con instrucciones basicas. 
@@ -7,7 +8,14 @@ import React from 'react'
 
 
 const Main = () => {
-    return (<h1>Main Page/Menu</h1> )
+    return (
+    <div>
+        <h1>Main Page/Menu</h1>
+        <Link className="btn btn-primary" to={{pathname: `/game`, state:{vsPlayer : false}}}>Singleplayer</Link>
+        <br/>
+        <Link className="btn btn-primary" to={{pathname: `/game`, state:{vsPlayer : true}}}>Local Multiplayer</Link>
+    </div>
+    )
 }
 
 export default Main;

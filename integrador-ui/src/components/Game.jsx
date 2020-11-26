@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 
+const Game = (props) => {
 /*TODO
  Agregar componentes
     Status oponente: define si se juega contra cpu u otro jugador
@@ -14,18 +15,22 @@ import React from 'react'
  */
 
 const [player1, setPlayer1] = useState({
-    choice = null,
-    wins = 0
+    choice : null,
+    wins : 0
   })
   const [player2, setPlayer2] = useState({
-    playerChoice = null,
-    wins = 0
+    playerChoice : null,
+    wins : 0
   })
   const [gameData, setGameData] = useState({
-      gamesPlayed = 0,
-      winner = null,
-      options = ["rock", "paper", "scissors", "lizard", "Spock"]
+      currentPlayer : player1,
+      gamesPlayed : 0,
+      winner : null,
   })
+
+  const options = ["rock", "paper", "scissors", "lizard", "Spock"];
+
+  const vsPlayer = props.location.state.vsPlayer; // false = vsCpu, true = vsPlayer
 
   const winner = () => {
       if(player1.playerChoice == player2.playerChoice) {
@@ -47,8 +52,24 @@ const [player1, setPlayer1] = useState({
   }
    
 
-const Game = () => {
-    return (<h1>Game page</h1> )
+
+    return (
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-1" align="center">
+
+              {options.map((option) =>
+                <>
+                <input type="radio" id={option} name="choice" value={option}/>
+                <label for={option}>{option}</label>
+                </>
+              )}
+
+            </div>
+          </div>
+        </div>
+    )
+
 }
 
 export default Game;
