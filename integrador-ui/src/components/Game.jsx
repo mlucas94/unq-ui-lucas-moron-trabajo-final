@@ -19,13 +19,17 @@ const [player1, setPlayer1] = useState({
     wins : 0
   })
   const [player2, setPlayer2] = useState({
-    playerChoice : null,
+    choice : null,
     wins : 0
-  })
+  });
+
   const [gameData, setGameData] = useState({
       currentPlayer : "player 1",
       gamesPlayed : 0,
       winner : null,
+      victoryConditionP1 : [[2,3], [0,4], [1,3], [1,4], [0,2]]
+      //Cada lista corresponde a las opciones que pierden frente al de esa posicion en la lista options
+      //Ej. index 0 = roca, gana frente a index 2 y 3, tijera y lagarto
   })
 
   const options = ["rock", "paper", "scissors", "lizard", "Spock"];
@@ -33,31 +37,38 @@ const [player1, setPlayer1] = useState({
   const vsPlayer = props.location.state.vsPlayer; // false = vsCpu, true = vsPlayer
 
   const winner = () => {
-      if(player1.playerChoice == player2.playerChoice) {
-          return "Draw"
-      }
-      if (player1Victory) {
-        return "Player 1"
+
+      let value = player1Victory();
+      console.log(value)
+      
+      if(player1.choice == player2.choice) {
+          setGameData({...gameData, winner : "Draw"})
+          return;
+      } else if (value) {
+        setGameData({...gameData, winner : "Player 1"})
       } else {
-          return "Player 2"
+        setGameData({...gameData, winner : "Player 2"})
       }
   }
 
   const player1Victory = () => {
-    return ((player1.choice  == "rock" && (player2.choice == "scissors" || player2.choice == "lizard"))
-    || (player1.choice == "paper" && (player2.choice == "rock" || player2.choice == "Spock"))
-    || (player1.choice == "scissors" && (player2.choice == "paper" || player2.choice == "lizard"))
-    || (player1.choice == "lizard" && (player2.choice == "Spock" || player2.choice == "paper"))
-    || (player1.choice == "Spock" && (player2.choice == "rock") || player2.choice == "scissors")) 
+    //Cambiar por matriz de resultados
+    const indexP1 = options.indexOf(player1.choice)
+    const indexP2 = options.indexOf(player2.choice)
+    console.log("..........")
+    console.log(indexP1)
+    console.log("..........")
+    console.log(indexP2)
+    console.log("..........")
+    let value = gameData.victoryConditionP1[indexP1].includes(indexP2)
+    return value
   }
 
   const handleChange = (event) => {
     if(gameData.currentPlayer == "player 1") {
-      setPlayer1({...player1, playerChoice : event.target.value})
-      console.log(event.target.value);
+      setPlayer1({...player1, choice : event.target.value})
     } else {
-      setPlayer2({...player2, playerChoice : event.target.value})
-      console.log(event.target.value);
+      setPlayer2({...player2, choice : event.target.value})
     }
   }
    
@@ -69,7 +80,17 @@ const [player1, setPlayer1] = useState({
       setGameData({...gameData, currentPlayer : "player 2"})
       
     } else {
-      setPlayer2({...player2, playerChoice : pcChoice()})
+      let computerChoice = pcChoice()
+      console.log("computerChoice is")
+      console.log(computerChoice)
+      setPlayer2({
+        ...player2,
+        choice : computerChoice
+      })
+      console.log(player2.choice)
+
+      //Buscar como hacer que este winner se ejecute despues de que termine setState (async)
+      winner();
     }
 
   }
@@ -79,9 +100,9 @@ const [player1, setPlayer1] = useState({
   }
 
   const reset = () => {
-    setGameData({...gameData, currentPlayer : "player 1"})
-    setPlayer1({...player1, playerChoice : null})
-    setPlayer2({...player1, playerChoice : null})
+    setGameData({...gameData, currentPlayer : "player 1", winner: null})
+    setPlayer1({...player1, choice : null})
+    setPlayer2({...player1, choice : null})
   }
 
     return (
@@ -101,7 +122,7 @@ const [player1, setPlayer1] = useState({
                 <input on type="submit" value="Submit"></input>
           </div>
           </form>
-          <div> {!!gameData.winner ? winner : "Waiting" } </div>
+          <div> {!!gameData.winner ? gameData.winner : "Waiting" } </div>
           <div> {!!player1.choice ? player1.choice : "Waiting p1"} </div>
           <div> {!!player2.choice ? player2.choice : "Waiting p2"} </div>
           <button onClick={reset}>Reset</button>
