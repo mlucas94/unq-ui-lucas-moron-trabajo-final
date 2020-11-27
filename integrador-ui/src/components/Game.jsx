@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Game = (props) => {
 /*TODO
@@ -13,6 +13,7 @@ const Game = (props) => {
     popup/alerta que simule espera; puede servir como 'cortina' para vs local
     popup/alerta que muestre quien gano y pregunte si se quiere continuar jugando
  */
+
 
 const [player1, setPlayer1] = useState({
     choice : null,
@@ -36,10 +37,16 @@ const [player1, setPlayer1] = useState({
 
   const vsPlayer = props.location.state.vsPlayer; // false = vsCpu, true = vsPlayer
 
+  useEffect(() => {
+    if(player2.choice) {
+      winner();
+    }
+
+  },[player2.choice])
+
   const winner = () => {
 
       let value = player1Victory();
-      console.log(value)
       
       if(player1.choice == player2.choice) {
           setGameData({...gameData, winner : "Draw"})
@@ -89,8 +96,8 @@ const [player1, setPlayer1] = useState({
       })
       console.log(player2.choice)
 
-      //Buscar como hacer que este winner se ejecute despues de que termine setState (async)
-      winner();
+      //Buscar como hacer que winner se ejecute despues de que termine setState (async)
+      //winner();
     }
 
   }
