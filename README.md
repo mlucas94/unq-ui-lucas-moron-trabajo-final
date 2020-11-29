@@ -1,10 +1,10 @@
 # unq-ui-lucas-moron-trabajo-final
 
 
-## Instalacion
+## Instalacion de las dependencias
 
 Dentro de la carpeta integrador-ui, ejecutar en consola npm install
 
-## Ejecucion
+## Ejecucion dev mode
 
-Dev mode: Dentro de la carpeta integrador-ui, ejecutar en consola npm start
+Dentro de la carpeta integrador-ui, ejecutar en consola npm start

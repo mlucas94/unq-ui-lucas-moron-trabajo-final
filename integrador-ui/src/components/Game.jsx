@@ -111,8 +111,8 @@ const [player1, setPlayer1] = useState({
 
   const reset = () => {
     setGameData({...gameData, currentPlayer : "player 1", winner: null, gamesPlayed : 0})
-    setPlayer1({...player1, choice : null})
-    setPlayer2({...player1, choice : null})
+    setPlayer1({...player1, choice : null, wins: 0})
+    setPlayer2({...player1, choice : null, wins: 0})
   }
 
     return (
