@@ -7,7 +7,7 @@ const Game = (props) => {
     Barra de opciones con botones
     Area de player: contador de victorias, ultima opcion elegida
     Area de CPU/otro player: idem a player
-    Area con numero de partidas jugadas, empates
+    Area con numero de partidas jugadas
     Boton de reiniciar contadores
     boton volver a menu
     popup/alerta que simule espera; puede servir como 'cortina' para vs local
@@ -37,24 +37,28 @@ const [player1, setPlayer1] = useState({
 
   const vsPlayer = props.location.state.vsPlayer; // false = vsCpu, true = vsPlayer
 
+  //https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
   useEffect(() => {
     if(player2.choice) {
       winner();
     }
-
   },[player2.choice])
 
   const winner = () => {
 
       let value = player1Victory();
+
+      let played = gameData.gamesPlayed;
       
       if(player1.choice == player2.choice) {
-          setGameData({...gameData, winner : "Draw"})
+          setGameData({...gameData, winner : "Draw", gamesPlayed : played + 1})
           return;
       } else if (value) {
-        setGameData({...gameData, winner : "Player 1"})
+        setGameData({...gameData, winner : "Player 1", gamesPlayed : played + 1})
+        setPlayer1({...player1, wins : player1.wins + 1});
       } else {
-        setGameData({...gameData, winner : "Player 2"})
+        setGameData({...gameData, winner : "Player 2", gamesPlayed : played + 1})
+        setPlayer2({...player2, wins : player2.wins + 1});
       }
   }
 
@@ -96,8 +100,7 @@ const [player1, setPlayer1] = useState({
       })
       console.log(player2.choice)
 
-      //Buscar como hacer que winner se ejecute despues de que termine setState (async)
-      //winner();
+
     }
 
   }
@@ -107,7 +110,7 @@ const [player1, setPlayer1] = useState({
   }
 
   const reset = () => {
-    setGameData({...gameData, currentPlayer : "player 1", winner: null})
+    setGameData({...gameData, currentPlayer : "player 1", winner: null, gamesPlayed : 0})
     setPlayer1({...player1, choice : null})
     setPlayer2({...player1, choice : null})
   }
@@ -130,8 +133,11 @@ const [player1, setPlayer1] = useState({
           </div>
           </form>
           <div> {!!gameData.winner ? gameData.winner : "Waiting" } </div>
+          <div> {gameData.gamesPlayed} </div>
           <div> {!!player1.choice ? player1.choice : "Waiting p1"} </div>
+          <div> {player1.wins} </div>
           <div> {!!player2.choice ? player2.choice : "Waiting p2"} </div>
+          <div> {player2.wins} </div>
           <button onClick={reset}>Reset</button>
         </div>
     )
