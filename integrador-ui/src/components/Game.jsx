@@ -141,14 +141,33 @@ const [player1, setPlayer1] = useState({
 
     return (
         <div className="container">
-          <div className="row">
-            <div className="col-xs-1" align="center">
-              {options.map((option) =>
-                <a key={option}>
-                  <button type="button" className="btn btn-primary" disabled={!gameInProgress} onClick={ () => handleChoose({option})}>{option}</button>
-                </a>
-              )}
-            </div>
+          <div className="row d-flex justify-content-center align-items-end">
+              <figure>
+                <button type="button" className="btn btn-circle border" disabled={!gameInProgress} onClick={ () => handleChoose({option : "rock"})}>
+                <img src="choices/rock.png" alt="rock" width="50" heigh="50"/></button>
+                <figcaption align="center">rock</figcaption>
+              </figure>
+              <figure>
+                <button type="button" className="btn btn-circle border" disabled={!gameInProgress} onClick={ () => handleChoose({option : "paper"})}>
+                <img src="choices/paper.png" alt="paper" width="50" heigh="50" /></button>
+                <figcaption align="center" >paper</figcaption>
+              </figure>
+              <div className="d-block">
+              <figcaption align="center">scissors</figcaption>
+                <button type="button" className="btn btn-circle border" disabled={!gameInProgress} onClick={ () => handleChoose({option : "scissors"})}>
+                <img src="choices/scissors.png" alt="scissors" width="50" heigh="50" /></button>
+                <figcaption align="center">scissors</figcaption>
+              </div>
+              <div className="d-block">
+                <button type="button" className="btn btn-circle border" disabled={!gameInProgress} onClick={ () => handleChoose({option : "lizard"})}>
+                <img src="choices/lizard.png" alt="lizard" width="50" heigh="200" /></button>
+                <figcaption align="center">lizard</figcaption>
+              </div>
+              <div className="d-block">
+                <button type="button" className="btn btn-circle border" disabled={!gameInProgress} onClick={ () => handleChoose({option : "Spock"})}>
+                <img src="choices/Spock.png" alt="Spock" width="50" heigh="50" /></button>
+                <figcaption align="center">Spock</figcaption>
+              </div>
           </div>
           <div> {!!gameData.winner ? gameData.winner : "Waiting" } </div>
           <div> {gameData.gamesPlayed} </div>
