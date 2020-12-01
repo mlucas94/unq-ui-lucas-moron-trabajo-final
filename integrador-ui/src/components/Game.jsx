@@ -14,11 +14,16 @@ const Game = (props) => {
     popup/alerta que muestre quien gano y pregunte si se quiere continuar jugando
  */
 
+ //TODO 1/12 Agregar un hook sesion que sirva para diferenciar si se esta jugando o se termino
+ //Alt: Bloquear botones cuando el jugador 2 hace su eleccion o ponercurrent player en null
+ 
+
 
 const [player1, setPlayer1] = useState({
     choice : null,
     wins : 0
   })
+
   const [player2, setPlayer2] = useState({
     choice : null,
     wins : 0
@@ -33,18 +38,28 @@ const [player1, setPlayer1] = useState({
       //Ej. index 0 = roca, gana frente a index 2 y 3, tijera y lagarto
   })
 
+  const [gameInProgress, setGameInProgress] = useState(true)
+
   const options = ["rock", "paper", "scissors", "lizard", "Spock"];
 
   const vsPlayer = props.location.state.vsPlayer; // false = vsCpu, true = vsPlayer
 
   //https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
   useEffect(() => {
-    if(player2.choice) {
+    if(player2.choice && player1.choice) {
       winner();
     }
   },[player2.choice])
 
+  useEffect(() => {
+    if(player1.choice) {
+      play();
+    }
+  },[player1.choice])
+
   const winner = () => {
+
+      setGameInProgress(false);
 
       let value = player1Victory();
 
@@ -75,16 +90,19 @@ const [player1, setPlayer1] = useState({
     return value
   }
 
-  const handleChange = (event) => {
+  const handleChoose = (choice) => {
+
+    console.log("&&&&&&&&&")
+    console.log(choice.option)
+    
     if(gameData.currentPlayer == "player 1") {
-      setPlayer1({...player1, choice : event.target.value})
+      setPlayer1({...player1, choice : choice.option})
     } else {
-      setPlayer2({...player2, choice : event.target.value})
+      setPlayer2({...player2, choice : choice.option})
     }
   }
    
-  const play = (event) => {
-    event.preventDefault();
+  const play = () => {
 
     //Usar un switch para agregar casos de 2 jugadores
     if (vsPlayer) {
@@ -99,8 +117,6 @@ const [player1, setPlayer1] = useState({
         choice : computerChoice
       })
       console.log(player2.choice)
-
-
     }
 
   }
@@ -113,32 +129,34 @@ const [player1, setPlayer1] = useState({
     setGameData({...gameData, currentPlayer : "player 1", winner: null, gamesPlayed : 0})
     setPlayer1({...player1, choice : null, wins: 0})
     setPlayer2({...player1, choice : null, wins: 0})
+    setGameInProgress(true);
+  }
+
+  const playAgain = () => {
+    setGameData({...gameData, currentPlayer : "player 1", winner: null});
+    setPlayer1({...player1, choice : null});
+    setPlayer2({...player2, choice : null});
+    setGameInProgress(true);
   }
 
     return (
         <div className="container">
-          <form onSubmit={play}>
           <div className="row">
-            <div className="col-xs-1" align="center" onChange={handleChange}>
+            <div className="col-xs-1" align="center">
               {options.map((option) =>
                 <a key={option}>
-                  <input type="radio" id={option} name="choice" value={option}/>
-                  <label for={option}>{option}</label>
+                  <button type="button" className="btn btn-primary" disabled={!gameInProgress} onClick={ () => handleChoose({option})}>{option}</button>
                 </a>
               )}
             </div>
           </div>
-          <div className="row">
-                <input on type="submit" value="Submit"></input>
-          </div>
-          </form>
           <div> {!!gameData.winner ? gameData.winner : "Waiting" } </div>
           <div> {gameData.gamesPlayed} </div>
-          <div> {!!player1.choice ? player1.choice : "Waiting p1"} </div>
           <div> {player1.wins} </div>
           <div> {!!player2.choice ? player2.choice : "Waiting p2"} </div>
           <div> {player2.wins} </div>
-          <button onClick={reset}>Reset</button>
+          <button onClick={playAgain} disabled={gameInProgress}>Continue</button>
+          <button onClick={reset} disabled={gameInProgress}>Reset</button>
         </div>
     )
 

@@ -11,9 +11,9 @@ const Main = () => {
     return (
     <div>
         <h1>Main Page/Menu</h1>
-        <Link className="btn btn-primary" to={{pathname: `/game`, state:{vsPlayer : false}}}>Singleplayer</Link>
+        <Link className="btn" to={{pathname: `/game`, state:{vsPlayer : false}}}>Singleplayer</Link>
         <br/>
-        <Link className="btn btn-primary" to={{pathname: `/game`, state:{vsPlayer : true}}}>Local Multiplayer</Link>
+        <Link className="btn" to={{pathname: `/game`, state:{vsPlayer : true}}}>Local Multiplayer</Link>
     </div>
     )
 }
