@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2/dist/sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 const Game = (props) => {
 
@@ -99,7 +101,8 @@ const [player1, setPlayer1] = useState({
       setGameStatus("Waiting for Player 2")
       
     } else {
-      let computerChoice = pcChoice()
+      let computerChoice = pcChoice();
+
       console.log("computerChoice is")
       console.log(computerChoice)
       setPlayer2({
@@ -132,7 +135,13 @@ const [player1, setPlayer1] = useState({
   }
 
   const showRules = () => {
-    
+    Swal.fire({
+      
+      title : "Rules", 
+      html : "Scissors cuts Paper, <br>Paper covers Rock, <br>Rock crushes Lizard," +
+      "<br>Lizard poisons Spock, <br>Spock smashes Scissors, <br>Scissors decapitates lizard," + 
+      " <br>Lizard eats Paper, <br>Paper disproves Spock, <br>Spock vaporizes Rock, <br>Rock crushes Scissors"
+    })
   }
 
     return (
@@ -176,22 +185,14 @@ const [player1, setPlayer1] = useState({
 
           <div className="row">
             <div className="col-xs col-sm col-md col-lg" align="center">
-              P1 Score
+              P1 Score: {player1.wins}
               <br/>
-              {player1.wins}
-              <br/>
-              Player 1 choose
-              <br/>
-              {player1.choice}
+              Player 1 choose: {player1.choice}
             </div>
             <div className="col-xs col-sm col-md col-lg" align="center">
-              P2 Score
+              P2 Score: {player2.wins}
               <br/>
-              {player2.wins}
-              <br/>
-              Player 2 choose
-              <br/>
-              {player2.choice}
+              Player 2 choose: {player2.choice}
             </div>
           </div>
           
@@ -201,7 +202,7 @@ const [player1, setPlayer1] = useState({
           </div>
 
           <div className="row justify-content-center">
-            <button className="btn btn-info">Rules</button>
+            <button className="btn btn-info" onClick={showRules}>Rules</button>
           </div>
 
         </div>
