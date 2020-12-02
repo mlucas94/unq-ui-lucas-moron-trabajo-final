@@ -140,8 +140,8 @@ const [player1, setPlayer1] = useState({
   }
 
     return (
-        <div className="container">
-          <div className="row d-flex justify-content-center align-items-end">
+        <div className="container-fluid">
+          <div className="row d-flex justify-content-center align-items-end bg-info">
               <figure>
                 <figcaption align="center">rock</figcaption>
                 <button type="button" className="btn btn-circle border" disabled={!gameInProgress} onClick={ () => handleChoose({option : "rock"})}>
