@@ -1,23 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const Game = (props) => {
-/*TODO
- Agregar componentes
-    Status oponente: define si se juega contra cpu u otro jugador
-    Barra de opciones con botones
-    Area de player: contador de victorias, ultima opcion elegida
-    Area de CPU/otro player: idem a player
-    Area con numero de partidas jugadas
-    Boton de reiniciar contadores
-    boton volver a menu
-    popup/alerta que simule espera; puede servir como 'cortina' para vs local
-    popup/alerta que muestre quien gano y pregunte si se quiere continuar jugando
- */
-
- //TODO 1/12 Agregar un hook sesion que sirva para diferenciar si se esta jugando o se termino
- //Alt: Bloquear botones cuando el jugador 2 hace su eleccion o ponercurrent player en null
- 
-
 
 const [player1, setPlayer1] = useState({
     choice : null,
@@ -40,7 +24,7 @@ const [player1, setPlayer1] = useState({
 
   const [gameInProgress, setGameInProgress] = useState(true)
 
-  const [gameStatus, setGameStatus] = useState("Waiting for player 1")
+  const [gameStatus, setGameStatus] = useState("Waiting for Player 1")
 
   const options = ["rock", "paper", "scissors", "lizard", "Spock"];
 
@@ -69,13 +53,16 @@ const [player1, setPlayer1] = useState({
       
       if(player1.choice == player2.choice) {
           setGameData({...gameData, winner : "Draw", gamesPlayed : played + 1})
+          setGameStatus("Draw")
           return;
       } else if (value) {
         setGameData({...gameData, winner : "Player 1", gamesPlayed : played + 1})
         setPlayer1({...player1, wins : player1.wins + 1});
+        setGameStatus("You won!")
       } else {
         setGameData({...gameData, winner : "Player 2", gamesPlayed : played + 1})
         setPlayer2({...player2, wins : player2.wins + 1});
+        setGameStatus("CPU won!")
       }
   }
 
@@ -109,6 +96,7 @@ const [player1, setPlayer1] = useState({
     //Usar un switch para agregar casos de 2 jugadores
     if (vsPlayer) {
       setGameData({...gameData, currentPlayer : "player 2"})
+      setGameStatus("Waiting for Player 2")
       
     } else {
       let computerChoice = pcChoice()
@@ -132,6 +120,7 @@ const [player1, setPlayer1] = useState({
     setPlayer1({...player1, choice : null, wins: 0})
     setPlayer2({...player1, choice : null, wins: 0})
     setGameInProgress(true);
+    setGameStatus("Waiting for Player 1")
   }
 
   const playAgain = () => {
@@ -139,9 +128,15 @@ const [player1, setPlayer1] = useState({
     setPlayer1({...player1, choice : null});
     setPlayer2({...player2, choice : null});
     setGameInProgress(true);
+    setGameStatus("Waiting for Player 1")
   }
 
     return (
+      <>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark" >
+          <Link className="navbar-brand" to="/main">Return to main menu</Link>
+        </nav>
+
         <div className="container-fluid">
           <div className="row justify-content-center align-items-end bg-info">
               <figure className="">
@@ -170,8 +165,9 @@ const [player1, setPlayer1] = useState({
                 <figcaption align="center"><b>Spock</b></figcaption>
               </figure>
           </div>
+
           <div className="row justify-content-center">
-            <div>WAITING</div>
+            <div>{gameStatus}</div>
           </div>
 
           <div> {!!gameData.winner ? gameData.winner : "Waiting" } </div>
@@ -180,8 +176,9 @@ const [player1, setPlayer1] = useState({
           <div> {!!player2.choice ? player2.choice : "Waiting p2"} </div>
           <div> {player2.wins} </div>
           <button onClick={playAgain} disabled={gameInProgress}>Continue</button>
-          <button onClick={reset} disabled={gameInProgress}>Reset</button>
+          <button onClick={reset}>Reset</button>
         </div>
+      </>
     )
 
 }

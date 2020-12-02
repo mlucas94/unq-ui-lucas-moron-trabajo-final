@@ -9,11 +9,13 @@ import { Link } from 'react-router-dom';
 
 const Main = () => {
     return (
-    <div>
+    <div align="center">
         <h1>Main Page/Menu</h1>
-        <Link className="btn btn-primary" to={{pathname: `/game`, state:{vsPlayer : false}}}>Singleplayer</Link>
+        <Link className="btn btn-primary m-2" to={{pathname: `/game`, state:{vsPlayer : false}}}>Singleplayer</Link>
         <br/>
-        <Link className="btn btn-danger" to={{pathname: `/game`, state:{vsPlayer : true}}}>Local Multiplayer</Link>
+        <Link className="btn btn-danger m-2" to={{pathname: `/game`, state:{vsPlayer : true}}}>Local Multiplayer</Link>
+        <br/>
+        <a className="btn btn-info m-2" target="_blank" href="http://www.samkass.com/theories/RPSSL.html">About RPSSL</a>
     </div>
     )
 }
