@@ -131,6 +131,10 @@ const [player1, setPlayer1] = useState({
     setGameStatus("Waiting for Player 1")
   }
 
+  const showRules = () => {
+    
+  }
+
     return (
       <>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark" >
@@ -170,13 +174,36 @@ const [player1, setPlayer1] = useState({
             <div>{gameStatus}</div>
           </div>
 
-          <div> {!!gameData.winner ? gameData.winner : "Waiting" } </div>
-          <div> {gameData.gamesPlayed} </div>
-          <div> {player1.wins} </div>
-          <div> {!!player2.choice ? player2.choice : "Waiting p2"} </div>
-          <div> {player2.wins} </div>
-          <button onClick={playAgain} disabled={gameInProgress}>Continue</button>
-          <button onClick={reset}>Reset</button>
+          <div className="row">
+            <div className="col-xs col-sm col-md col-lg" align="center">
+              P1 Score
+              <br/>
+              {player1.wins}
+              <br/>
+              Player 1 choose
+              <br/>
+              {player1.choice}
+            </div>
+            <div className="col-xs col-sm col-md col-lg" align="center">
+              P2 Score
+              <br/>
+              {player2.wins}
+              <br/>
+              Player 2 choose
+              <br/>
+              {player2.choice}
+            </div>
+          </div>
+          
+          <div className="row justify-content-center">
+            <button className="btn btn-primary m-5" onClick={playAgain} disabled={gameInProgress}>Continue</button>
+            <button className="btn btn-danger m-5" onClick={reset}>Reset</button>
+          </div>
+
+          <div className="row justify-content-center">
+            <button className="btn btn-info">Rules</button>
+          </div>
+
         </div>
       </>
     )
