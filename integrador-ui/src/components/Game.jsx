@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2/dist/sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
+import './Game.css'
 
 const Game = (props) => {
 
@@ -159,7 +160,7 @@ const [player1, setPlayer1] = useState({
         </nav>
 
         <div className="container-fluid">
-          <div className="row justify-content-center align-items-end bg-info">
+          <div className="row justify-content-center align-items-end background-choice">
               <figure className="">
                 <button type="button" className="btn btn-circle border-right" disabled={!gameInProgress} onClick={ () => handleChoose({option : "rock"})}>
                 <img src="choices/rock.png" alt="rock" width="100" heigh="100"/></button>
@@ -206,11 +207,11 @@ const [player1, setPlayer1] = useState({
           
           <div className="row justify-content-center">
             <button className="btn btn-primary m-5" onClick={playAgain} disabled={gameInProgress}>Continue</button>
-            <button className="btn btn-danger m-5" onClick={reset}>Reset</button>
           </div>
 
           <div className="row justify-content-center">
-            <button className="btn btn-info" onClick={showRules}>Rules</button>
+            <button className="btn btn-info m-5" onClick={showRules}>Rules</button>
+            <button className="btn btn-danger m-5" onClick={reset}>Reset</button>
           </div>
 
         </div>

@@ -1,0 +1,8 @@
+.btn:focus {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.background-choice{
+    background-color: #3D8A8D;
+}

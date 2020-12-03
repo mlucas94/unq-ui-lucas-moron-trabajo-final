@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const Main = () => {
     return (
     <div align="center">
-        <h1>Main Page/Menu</h1>
+        <h1 className="p-5">Rock Paper Scisors Lizard Spock</h1>
         <Link className="btn btn-primary m-2" to={{pathname: `/game`, state:{vsPlayer : false}}}>Singleplayer</Link>
         <br/>
         <Link className="btn btn-danger m-2" to={{pathname: `/game`, state:{vsPlayer : true}}}>Local Multiplayer</Link>
