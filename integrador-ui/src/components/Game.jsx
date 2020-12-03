@@ -60,11 +60,19 @@ const [player1, setPlayer1] = useState({
       } else if (value) {
         setGameData({...gameData, winner : "Player 1", gamesPlayed : played + 1})
         setPlayer1({...player1, wins : player1.wins + 1});
-        setGameStatus("You won!")
+        if(vsPlayer) {
+          setGameStatus("Player 1 wins!")
+        } else {
+          setGameStatus("You win!")
+        }
       } else {
         setGameData({...gameData, winner : "Player 2", gamesPlayed : played + 1})
         setPlayer2({...player2, wins : player2.wins + 1});
-        setGameStatus("CPU won!")
+        if(vsPlayer) {
+          setGameStatus("Player 2 wins!")
+        } else {
+          setGameStatus("CPU wins!")
+        }
       }
   }
 
@@ -139,8 +147,8 @@ const [player1, setPlayer1] = useState({
       
       title : "Rules", 
       html : "Scissors cuts Paper, <br>Paper covers Rock, <br>Rock crushes Lizard," +
-      "<br>Lizard poisons Spock, <br>Spock smashes Scissors, <br>Scissors decapitates lizard," + 
-      " <br>Lizard eats Paper, <br>Paper disproves Spock, <br>Spock vaporizes Rock, <br>Rock crushes Scissors"
+      "<br>Lizard poisons Spock, <br>Spock smashes Scissors, <br>Scissors decapitates Lizard," + 
+      " <br>Lizard eats Paper, <br>Paper disproves Spock, <br>Spock vaporizes Rock, <br>Rock crushes Scissors."
     })
   }
 
