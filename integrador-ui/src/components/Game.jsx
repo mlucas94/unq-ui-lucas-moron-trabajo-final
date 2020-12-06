@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2/dist/sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
-import './Game.css'
+import './Game.css';
+import "./Style.css";
 
 const Game = (props) => {
 
@@ -21,8 +22,6 @@ const [player1, setPlayer1] = useState({
       gamesPlayed : 0,
       winner : null,
       victoryConditionP1 : [[2,3], [0,4], [1,3], [1,4], [0,2]]
-      //Cada lista corresponde a las opciones que pierden frente al de esa posicion en la lista options
-      //Ej. index 0 = roca, gana frente a index 2 y 3, tijera y lagarto
   })
 
   const [gameInProgress, setGameInProgress] = useState(true)
@@ -31,7 +30,7 @@ const [player1, setPlayer1] = useState({
 
   const options = ["rock", "paper", "scissors", "lizard", "Spock"];
 
-  const vsPlayer = props.location.state.vsPlayer; // false = vsCpu, true = vsPlayer
+  const vsPlayer = props.location.state.vsPlayer;
 
   //https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
   useEffect(() => {
@@ -78,7 +77,7 @@ const [player1, setPlayer1] = useState({
   }
 
   const player1Victory = () => {
-    //Cambiar por matriz de resultados
+    
     const indexP1 = options.indexOf(player1.choice)
     const indexP2 = options.indexOf(player2.choice)
     console.log("..........")
@@ -104,7 +103,6 @@ const [player1, setPlayer1] = useState({
    
   const play = () => {
 
-    //Usar un switch para agregar casos de 2 jugadores
     if (vsPlayer) {
       setGameData({...gameData, currentPlayer : "player 2"})
       setGameStatus("Waiting for Player 2")
@@ -154,7 +152,7 @@ const [player1, setPlayer1] = useState({
   }
 
     return (
-      <>
+      <div className="main-div bg-light">
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark" >
           <Link className="navbar-brand" to="/main">Return to main menu</Link>
         </nav>
@@ -188,11 +186,11 @@ const [player1, setPlayer1] = useState({
               </figure>
           </div>
 
-          <div className="row justify-content-center">
+          <div className="row justify-content-center bg-warning">
             <div>{gameStatus}</div>
           </div>
 
-          <div className="row">
+          <div className="row bg-warning">
             <div className="col-xs col-sm col-md col-lg" align="center">
               P1 Score: {player1.wins}
               <br/>
@@ -215,7 +213,7 @@ const [player1, setPlayer1] = useState({
           </div>
 
         </div>
-      </>
+      </div>
     )
 
 }
