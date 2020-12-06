@@ -206,12 +206,12 @@ const [player1, setPlayer1] = useState({
           </div>
           
           <div className="row justify-content-center">
-            <button className="btn btn-primary m-5" onClick={playAgain} disabled={gameInProgress}>Continue</button>
+            <button className="btn btn-primary m-5" onClick={playAgain} disabled={gameInProgress}>Continue playing</button>
           </div>
 
           <div className="row justify-content-center">
             <button className="btn btn-info m-5" onClick={showRules}>Rules</button>
-            <button className="btn btn-danger m-5" onClick={reset}>Reset</button>
+            <button className="btn btn-danger m-5" onClick={reset}>Restart game</button>
           </div>
 
         </div>
